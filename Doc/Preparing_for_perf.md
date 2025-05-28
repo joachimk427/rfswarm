@@ -18,7 +18,7 @@ If you don't simulate this behaviour in a load test, you risk having much shorte
 - Background Polling: Many applications poll the server in the background while the user is idle to update dynamic data displayed on the screen, this is becoming increasingly common with web 2.0 style web applications.
 By not having any or sufficient user thinking time in your scripts, your robots might not trigger this polling or may not trigger this polling to the same extent as a real user would, so you will end up applying a lighter load on the application server that is realistic.
 Never under estimate the impact of background polling, application servers have flatlined at 100% CPU from just 5 users logged in and sitting idle because of 1 poorly constructed background polling event that was taking 25% of the application server's CPU per user calling this polling event.
-- Overloading your agents: Launching and client applications or web browsers is a hardware intensive (CPU, Memory, and Disk) task for your agent machines, without sufficient user thinking time in your scripts, you will increase the workload you are placing on your agent machines without applying any load to your application under test.
+- Overloading your agents: Launching a client applications or web browsers is a hardware intensive (CPU, Memory, and Disk) task for your agent machines, without sufficient user thinking time in your scripts, you will increase the workload you are placing on your agent machines without applying any load to your application under test.
 This will end up in limiting the number of robots you can run on a single agent machine and potentially limit the overall number of robots you can run in a test or increase significantly the number of agent machines you need to drive a specific load profile.
 
 The easiest way to simulate this user behaviour would be to simply use the Robot Framework's built-in sleep command:
@@ -45,7 +45,7 @@ Then you can simply include the `Standard Think Time` keyword between each user 
 
 ## Useful Variables
 
-When an agent runs a robot test case it passes some variables on to the test case that might be useful to know or used to trigger variations in behaviour in you test cases. While there is no requirement to use these variables they are values that I have had to manually implement in laodrunner scripts, so knowing I would find them useful I have included them by default to make life easier.
+When an agent runs a robot test case it passes some variables on to the test case that might be useful to know or used to trigger variations in behaviour in you test cases. While there is no requirement to use these variables they are values that I have had to manually implement in loadrunner scripts, so knowing I would find them useful I have included them by default to make life easier.
 
 ### Index
 Index should be available through the variable `${RFS_INDEX}`, this is the number you see in the Index column at the bottom of the plan screen
@@ -68,7 +68,7 @@ With performance testing we don't want this, rather we want hundreds or even tho
 
 ### [Faker Library](https://github.com/guykisel/robotframework-faker)
 
-[robotframeork-faker](https://github.com/guykisel/robotframework-faker) can produce realistic locale aware generated data values for a large variety of data type including names, email and physical addresses, phone numbers etc.
+[robotframework-faker](https://github.com/guykisel/robotframework-faker) can produce realistic locale aware generated data values for a large variety of data type including names, email and physical addresses, phone numbers etc.
 
 ### Reading Data Files
 
@@ -127,13 +127,13 @@ rfswarm ensures all the files referenced using `Resource`, `Variables` and `Meta
 
 ### TestDataTable
 
-Often when testing applications there are business processes that produce system generated data or use system generated data from a previous business process. with regression testing it's quite simple to string the business process together in one really long test case and simply pass the value along as a variable.
+Often when testing applications there are business processes that produce system generated data or use system generated data from a previous business process. With regression testing it's quite simple to string the business process together in one really long test case and simply pass the value along as a variable.
 
 In performance testing it's not always that simple:
 - When you string the business process together the test case may run for many hours or even days, but you want your performance test to only run for a set period like a standard day.
 - You want to ensure you hit the transaction rates required for each individual process and the processes in that set will often have different rates that need to be achieved.
 - You don't want all the users doing the first step in the process at the start of the performance test and then 2 hours none are doing that process because they are all up to the 3rd or 5th process in the sequence.
-So you really need a way to pass these values from one test to another from one robot process to another and robot process and ideally from one robot process on one agent machine to another robot process running a different agent machine.
+So you really need a way to pass these values from one test to another from one robot process to another robot process and ideally from one robot process on one agent machine to another robot process running a different agent machine.
 
 So to help with this the [TestDataTable](https://github.com/damies13/TestDataTable) project was created. It is a data table server that makes it easy to pass data between scripts and robot processes.
 
